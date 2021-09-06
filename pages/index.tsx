@@ -7,9 +7,8 @@ const ffmpeg = createFFmpeg({ log: true, corePath: '/libs/ffmpeg/ffmpeg-core.js'
 
 export default function Home() {
   const [videoUrl, setVideoUrl] = useState();
-  const [convertedUrl, setConvertedUrl] = useState();
-  const [metadata, setMetadata] = useState();
-  const [cutVideoUrl, setCutVideoUrl] = useState();
+  const [convertedUrl, setConvertedUrl] = useState('');
+  const [cutVideoUrl, setCutVideoUrl] = useState('');
 
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
@@ -34,11 +33,6 @@ export default function Home() {
     }
 
     const onVideoLoad = (e) => {
-      setMetadata({
-        videoHeight: e.target.videoHeight,
-        videoWidth: e.target.videoWidth,
-        duration: e.target.duration
-      });
       setStartTime(convertToHms(0));
       setEndTime(convertToHms(e.target.duration))
     }
@@ -51,9 +45,9 @@ export default function Home() {
   const handleLink = (e) => {
     setConvertedUrl(null);
     if (e.target.value.indexOf('youtu') > -1) {
-      const url = new URL(e.target.value);
+      const url = `${window.location.origin}/api/preview?videoUrl=${new URL(e.target.value)}`;
 
-      setConvertedUrl(`${window.location.origin}/api/preview?videoUrl=${url}`);
+      setConvertedUrl(url);
     }
 
     setVideoUrl(e.target.value)
