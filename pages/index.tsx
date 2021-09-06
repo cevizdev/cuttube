@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Layout from '../components/app/layout';
 import { convertToHms, convertToSeconds } from '../utils/date';
-import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
-const ffmpeg = createFFmpeg({ log: true, corePath: '/libs/ffmpeg/ffmpeg-core.js' });
+import { getFfmpeg, fetchFile } from '../utils/ffmpeg';
+
+const ffmpeg = getFfmpeg();
 
 export default function Home() {
   const [videoUrl, setVideoUrl] = useState();
@@ -12,7 +13,6 @@ export default function Home() {
 
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
-  const [preview, setPreview] = useState(false);
 
   const [loaded, setLoaded] = useState(false);
 
@@ -22,8 +22,6 @@ export default function Home() {
     if (!convertedUrl) {
       return (<Image width="640" height="360" src="/images/welcome.png" className="rounded-lg shadow-2xl" alt="CutTube - Youtube Video Cutter and Downloader" />);
     }
-
-    console.log('convertedUrl', convertedUrl)
 
     const onTimeUpdate = (e) => {
       /*if (preview && videoControl.current.currentTime > convertToSeconds(endTime)) {
