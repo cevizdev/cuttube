@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
 import Layout from '../components/app/layout';
 import { convertToHms, convertToSeconds } from '../utils/date';
 import { getFfmpeg, fetchFile } from '../utils/ffmpeg';
@@ -21,7 +20,7 @@ export default function Home() {
 
   const renderVideo = () => {
     if (!convertedUrl) {
-      return (<Image width="640" height="360" src="https://picsum.photos/640/360" className="rounded-lg shadow-2xl" alt="CutTube - Youtube Video Cutter and Downloader" />);
+      return (<img width="640" height="360" src="https://picsum.photos/640/360" className="rounded-lg shadow-2xl" alt="CutTube - Youtube Video Cutter and Downloader" />);
     }
 
     const onTimeUpdate = (e) => {
