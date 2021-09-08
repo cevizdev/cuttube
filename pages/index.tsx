@@ -3,6 +3,7 @@ import Layout from '../components/app/layout';
 import { convertToHms, convertToSeconds } from '../utils/date';
 import { getFfmpeg, fetchFile } from '../utils/ffmpeg';
 import Loading from '../components/app/loading';
+import Head from 'next/head';
 
 const ffmpeg = getFfmpeg();
 
@@ -149,6 +150,9 @@ export default function Home() {
 
   return (
     <Layout>
+      <Head>
+        
+      </Head>
       <Loading show={!loaded} />
       <div className="grid max-w-screen-xl px-6 mx-auto lg:px-8 xl:px-4 md:grid-cols-4 xl:grid-cols-5 gap-x-12 lg:gap-x-20">
         <div className="self-center order-2 col-span-2 mt-12 md:order-1 md:mt-0">
@@ -158,7 +162,7 @@ export default function Home() {
             <input disabled={!loaded} value={videoUrl} onChange={handleLink} type="text" placeholder="https://youtube.com/watch?v=..." className="flex-1 px-4 py-4 leading-none border border-gray-200 rounded-lg focus:outline-none" />
             <button disabled={!loaded} className="inline-block px-5 py-2 font-semibold text-white rounded-lg focus:outline-none bg-gradient-to-br from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-700 ">Start to Cut</button>
           </div>
-          <p className="text-sm text-gray-500">No paid required but Follow me on Github and Twitter</p>
+          <p className="text-sm text-gray-500">No paid require You can sponsor or contribute to the project</p>
         </div>
         <div className="order-1 col-span-2 md:order-2 xl:col-span-3">
           {renderVideo()}

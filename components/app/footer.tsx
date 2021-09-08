@@ -96,6 +96,7 @@ const Footer = () => {
                 <div className="space-y-4 text-sm text-center md:space-y-1 md:text-left">
                     <p>©2021 Youtube Video Cutter and Downloader. Developed by <a href="https://github.com/peacecwz" target="_blank">PeaceCwz</a></p>
                     <p>It's Open Source project. You can sponsor and support project on Twitter and Github</p>
+                    <p>Designed by <a href="https://www.themes.dev/library/tailwindcss-saas-landing-page/#details">themes.dev</a> You can check more themes</p>
                 </div>
                 <a target="_blank" href="https://github.com/usigntech/cuttube" className="inline-block px-5 py-4 font-semibold text-white rounded-lg bg-gradient-to-br from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-700 lg:px-8 md:transform md:-translate-y-2">See Open Source Project</a>
             </div>
