@@ -20,7 +20,7 @@ export default function Home() {
 
   const renderVideo = () => {
     if (!convertedUrl) {
-      return (<img width="640" height="360" src="https://picsum.photos/640/360" className="rounded-lg shadow-2xl" alt="CutTube - Youtube Video Cutter and Downloader" />);
+      return (<img width="640" height="360" src="/api/thumbnail" className="rounded-lg shadow-2xl" alt="CutTube - Youtube Video Cutter and Downloader" />);
     }
 
     const onTimeUpdate = (e) => {
@@ -93,6 +93,22 @@ export default function Home() {
     )
   }
 
+  const renderController = () => {
+    if (!convertedUrl) {
+      return null;
+    }
+
+    return (
+      <div className="flex justify-between mb-6 space-x-4 mt-10">
+        <div className="flex space-x-4">
+          <button onClick={onPreview} className="inline-block px-5 py-2 font-semibold text-white rounded-lg focus:outline-none bg-gradient-to-br from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-700 ">Preview</button>
+          <button onClick={onReset} className="inline-block px-5 py-2 font-semibold text-white rounded-lg focus:outline-none bg-gradient-to-br from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-700 ">Reset</button>
+          <a download href={cutVideoUrl} className="inline-block px-5 py-2 font-semibold text-white rounded-lg focus:outline-none bg-gradient-to-br from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-700 ">Download</a>
+        </div>
+      </div>
+    )
+  }
+
   const convert = async () => {
     const length = convertToSeconds(endTime) - convertToSeconds(startTime);
     ffmpeg.FS('writeFile', 'input.mp4', await fetchFile(convertedUrl));
@@ -137,7 +153,7 @@ export default function Home() {
       <div className="grid max-w-screen-xl px-6 mx-auto lg:px-8 xl:px-4 md:grid-cols-4 xl:grid-cols-5 gap-x-12 lg:gap-x-20">
         <div className="self-center order-2 col-span-2 mt-12 md:order-1 md:mt-0">
           <h1 className="mb-2 text-3xl font-bold text-gray-800 md:text-4xl lg:text-5xl md:mb-4 lg:mb-8">The best way to cut Youtube video</h1>
-          <p className="mb-6 text-lg text-gray-600 xl:text-xl lg:mb-8 xl:mb-10">Easy, safe and no paid required Youtube video CUT AND Download application</p>
+          <p className="mb-6 text-lg text-gray-600 xl:text-xl lg:mb-8 xl:mb-10">Easy, safe and no paid require Youtube video CUT AND DOWNLOAD</p>
           <div className="flex mb-6 space-x-4">
             <input disabled={!loaded} value={videoUrl} onChange={handleLink} type="text" placeholder="https://youtube.com/watch?v=..." className="flex-1 px-4 py-4 leading-none border border-gray-200 rounded-lg focus:outline-none" />
             <button disabled={!loaded} className="inline-block px-5 py-2 font-semibold text-white rounded-lg focus:outline-none bg-gradient-to-br from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-700 ">Start to Cut</button>
@@ -147,13 +163,7 @@ export default function Home() {
         <div className="order-1 col-span-2 md:order-2 xl:col-span-3">
           {renderVideo()}
           {renderCutControl()}
-          <div className="flex justify-between mb-6 space-x-4 mt-10">
-            <div className="flex space-x-4">
-              <button onClick={onPreview} className="inline-block px-5 py-2 font-semibold text-white rounded-lg focus:outline-none bg-gradient-to-br from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-700 ">Preview</button>
-              <button onClick={onReset} className="inline-block px-5 py-2 font-semibold text-white rounded-lg focus:outline-none bg-gradient-to-br from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-700 ">Reset</button>
-              <a download href={cutVideoUrl} className="inline-block px-5 py-2 font-semibold text-white rounded-lg focus:outline-none bg-gradient-to-br from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-700 ">Download</a>
-            </div>
-          </div>
+          {renderController()}
         </div>
       </div>
 
