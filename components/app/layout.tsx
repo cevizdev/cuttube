@@ -8,6 +8,7 @@ export default function Layout({ children }) {
   return (
     <main className="font-medium text-gray-700 bg-white">
       <Head>
+        <title>{siteTitle}</title>
         <meta
           name="description"
           content="Free youtube video cut online download. Easy cut youtube video online free"
