@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Layout from '../components/app/layout';
 import { convertToHms, convertToSeconds } from '../utils/date';
 import { getFfmpeg, fetchFile } from '../utils/ffmpeg';
+import Loading from '../components/app/loading';
 
 const ffmpeg = getFfmpeg();
 
@@ -14,13 +15,13 @@ export default function Home() {
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
 
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(true);
 
   const videoControl = useRef(null);
 
   const renderVideo = () => {
     if (!convertedUrl) {
-      return (<Image width="640" height="360" src="/images/welcome.png" className="rounded-lg shadow-2xl" alt="CutTube - Youtube Video Cutter and Downloader" />);
+      return (<Image width="640" height="360" src="https://picsum.photos/640/360" className="rounded-lg shadow-2xl" alt="CutTube - Youtube Video Cutter and Downloader" />);
     }
 
     const onTimeUpdate = (e) => {
@@ -36,7 +37,7 @@ export default function Home() {
     }
 
     return (
-      <video ref={videoControl} onTimeUpdate={onTimeUpdate} onLoadedMetadata={onVideoLoad} className="rounded-lg shadow-2xl" autoPlay controls src={convertedUrl}></video>
+      <video onLoadedData={() => setLoaded(true)} ref={videoControl} onTimeUpdate={onTimeUpdate} onLoadedMetadata={onVideoLoad} className="rounded-lg shadow-2xl" autoPlay controls src={convertedUrl}></video>
     )
   }
 
@@ -46,6 +47,7 @@ export default function Home() {
       const url = `${window.location.origin}/api/preview?videoUrl=${new URL(e.target.value)}`;
 
       setConvertedUrl(url);
+      setLoaded(false);
     }
 
     setVideoUrl(e.target.value)
@@ -59,11 +61,13 @@ export default function Home() {
 
   const onPreview = async () => {
     if (startTime && endTime) {
+      setLoaded(false);
       videoControl.current.pause();
       //setPreview(true);
       const url = await convert();
       setCutVideoUrl(url);
       setConvertedUrl(url);
+      setLoaded(true);
     }
   }
 
@@ -100,6 +104,10 @@ export default function Home() {
       startTime,
       '-t',
       length.toString(),
+      '-c:v',
+      'copy',
+      '-c:a',
+      'copy',
       'converted.mp4',
     );
 
@@ -115,6 +123,7 @@ export default function Home() {
   }
 
   const load = async () => {
+    setLoaded(false);
     await ffmpeg.load();
     setLoaded(true);
   };
@@ -125,7 +134,7 @@ export default function Home() {
 
   return (
     <Layout>
-
+      <Loading show={!loaded} />
       <div className="grid max-w-screen-xl px-6 mx-auto lg:px-8 xl:px-4 md:grid-cols-4 xl:grid-cols-5 gap-x-12 lg:gap-x-20">
         <div className="self-center order-2 col-span-2 mt-12 md:order-1 md:mt-0">
           <h1 className="mb-2 text-3xl font-bold text-gray-800 md:text-4xl lg:text-5xl md:mb-4 lg:mb-8">The best way to cut Youtube video</h1>
